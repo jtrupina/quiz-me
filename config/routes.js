@@ -34,7 +34,18 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
+
+  // AUTHENTICATION
+  'get /signup': {
+    view: 'auth/signup'
+  },
+  'get /signin': {
+    view: 'auth/signin'
+  },
+  'post /signup': 'UserController.signup',
+  'post /signin': 'UserController.signin',
+  '/logout': 'UserController.logout'
 
   /***************************************************************************
   *                                                                          *
