@@ -23,6 +23,7 @@ module.exports = {
       // We do this by "remembering" the user in the session.
       // Subsequent requests from this user agent will have `req.session.me` set.
       req.session.me = user.id;
+      req.session.email = user.email
 
       // If this is not an HTML-wanting browser, e.g. AJAX/sockets/cURL/etc.,
       // send a 200 response letting the user agent know the signup was successful.

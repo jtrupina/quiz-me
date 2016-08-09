@@ -45,7 +45,10 @@ module.exports.routes = {
   },
   'post /signup': 'UserController.signup',
   'post /signin': 'UserController.signin',
-  '/logout': 'UserController.logout'
+  '/logout': 'UserController.logout',
+
+  // CHAT
+  'get /chat': 'ChatController.render'
 
   /***************************************************************************
   *                                                                          *
