@@ -122,10 +122,35 @@ module.exports.sockets = {
   * disconnects                                                              *
   *                                                                          *
   ***************************************************************************/
-  // afterDisconnect: function(session, socket, cb) {
-  //   // By default: do nothing.
-  //   return cb();
-  // },
+   afterDisconnect: function(session, socket, cb) {
+    console.log("DISCONNECT SESSION", session);
+    try {
+
+      if (session.users != undefined) {
+
+        // Look up the user ID using the connected socket
+        var socketId = sails.sockets.getId(socket);
+        var userId = session.users[socketId].id;
+
+        if (userId) {
+
+          // Get the user instance
+          User.findOne(userId).exec(function(err, user) {
+
+            // Set the user offline
+            user.status = 'offline';
+            user.save();
+
+            // Publish the destroy event to every socket subscribed to this user instance
+            User.publishDestroy(user.id, null, {previous: user});
+          });
+        }
+      }
+    } catch (e) {
+      console.log("Error in onDisconnect: ", e);
+    }
+    return cb();
+   }
 
   /***************************************************************************
   *                                                                          *

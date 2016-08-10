@@ -7,6 +7,8 @@
 
 module.exports = {
 
+  autosubscribe: ['destroy', 'update'],
+
   attributes: {
     email: {
       type: 'email',
