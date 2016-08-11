@@ -37,15 +37,15 @@ module.exports.routes = {
   },
 
   // AUTHENTICATION
-  'get /signup': {
-    view: 'auth/signup'
+  'get /register': {
+    view: 'auth/register'
   },
-  'get /signin': {
-    view: 'auth/signin'
+  'get /login': {
+    view: 'auth/login'
   },
-  'post /signup': 'UserController.signup',
-  'post /signin': 'UserController.signin',
-  '/logout': 'UserController.logout',
+  'post /register': 'AuthController.register',
+  'post /login': 'AuthController.login',
+  '/logout': 'AuthController.logout',
 
   // CHAT
   'get /chat': 'ChatController.render'

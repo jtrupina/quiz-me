@@ -26,12 +26,12 @@ function receiveMessage(data) {
 function onClickSendPublicMessage() {
   var sendMessageButton = $('#btn-input');
   if (sendMessageButton.val() !== '') {
-    sendMessage(me.email, sendMessageButton.val());
+    sendMessage('', sendMessageButton.val());
 
     sendMessageButton.val('');
   }
 }
 
 function sendMessage(senderName, message) {
-  io.socket.post('/user/chat', {sender: senderName, msg: message});
+  io.socket.post('/chat/send', {sender: senderName, msg: message});
 }

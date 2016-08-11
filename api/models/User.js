@@ -15,15 +15,15 @@ module.exports = {
       unique: true,
       required: true
     },
+    name: {
+      type: 'string',
+      required: true,
+      unique: true
+    },
     password: {
       type: 'string',
       required: true,
       minLength: 6
-    },
-    status: {
-      type: 'string',
-      defaultsTo: 'offline',
-      required: false
     }
   },
 
@@ -33,23 +33,18 @@ module.exports = {
     // Create a user
     User.create({
       email: inputs.email,
+      name: inputs.name,
       password: hasher.generate(inputs.password)
     })
       .exec(cb);
   },
 
   /**
-   * Check validness of a login using the provided inputs.
-   * But encrypt the password first.
-   *
-   * @param  {Object}   inputs
-   *                     • email    {String}
-   *                     • password {String}
-   * @param  {Function} cb
+   * Find a user by specified email
+   * @param inputs
+   * @param cb
    */
-
   attemptLogin: function (inputs, cb) {
-    // Create a user
     User.findOne({
       email: inputs.email,
     })

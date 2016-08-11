@@ -19,10 +19,10 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <% if (!req.session.me) { %>
-          <li><a href="/signup">Signup</a></li>
-          <li><a href="/signin">Login</a></li>
+          <li><a href="/register">Register</a></li>
+          <li><a href="/login">Login</a></li>
           <% } else { %>
-          <li><a href="/logout">Logout</a> </li>
+          <li><a href="/logout">(<%= req.session.me.email%>)Logout</a> </li>
           <% } %>
         </ul>
       </div><!--/.nav-collapse -->

@@ -27,7 +27,7 @@ module.exports.policies = {
   ***************************************************************************/
 
   '*': 'sessionAuth',
-  'UserController': {
+  'AuthController': {
     '*': true
   }
 

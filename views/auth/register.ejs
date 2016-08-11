@@ -2,11 +2,11 @@
 <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
   <div class="panel panel-info">
     <div class="panel-heading">
-      <div class="panel-title">Sign Up</div>
-      <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="/signin">Sign In</a></div>
+      <div class="panel-title">Register</div>
+      <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="/signin">Login</a></div>
     </div>
     <div class="panel-body" >
-      <form id="signupform" class="form-horizontal" role="form" method="post" action="/signup">
+      <form id="signupform" class="form-horizontal" role="form" method="post" action="/register">
 
         <div id="signupalert" style="display:none" class="alert alert-danger">
           <p>Error:</p>
@@ -19,6 +19,12 @@
           <label for="email" class="col-md-3 control-label">Email</label>
           <div class="col-md-9">
             <input type="text" class="form-control" name="email" placeholder="Email Address">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="col-md-3 control-label">Name</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" name="name" placeholder="Name">
           </div>
         </div>
         <div class="form-group">

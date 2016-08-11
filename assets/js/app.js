@@ -1,45 +1,45 @@
 io.socket.on('connect', function socketConnected() {
-  console.log("SOCKET CONNECT");
 
-  io.socket.get("/user/announce", function(data){
-    window.me = data;
+  // List of all users
+  var connectedUserIDs = [];
 
-    // Get the current list of users online.  This will also subscribe us to
-    // update and destroy events for the individual users.
-    io.socket.get('/user', updateUserList);
-    io.socket.post('/user/chat', {sender: 'System', msg: data.email + ' joined'});
+  io.socket.get('/chat/subscribe', function (data, jwr) {
+    // We get a list of all connected users after subscribing and need to display them
+    $.each(data, function (key, user) {
+      $('#users-list').append('<li class="list-group-item" data-user-id=' + user.id +'>' + user.name + '</li>');
+      connectedUserIDs.push(user.id);
+    });
+
+    // Handling user disconnects
+    io.socket.on('user_left_chat', function(userId) {
+      var userName = $('li[data-user-id="' + userId + '"]').html();
+
+      // Remove it from our connected users array
+      connectedUserIDs.splice(connectedUserIDs.indexOf(userId), 1);
+
+      // Remove it from the list
+      $('li[data-user-id="' + userId + '"]').remove();
+
+      writeMessage('System', userName + ' left');
+    });
+
+    // Handling user connections
+    io.socket.on('user_joined_chat', function(user) {
+      // Only notify or add to list if the user is not in the users array
+      if($.inArray(user.id, connectedUserIDs) == -1) {
+        $('#users-list').append('<li class="list-group-item" data-user-id=' + user.id + '>' + user.name + '</li>');
+
+        writeMessage('System', user.name + ' joined');
+
+        // Add it to the connected users array
+        connectedUserIDs.push(user.id);
+      }
+    });
+
+    io.socket.on('new_message', function (data) {
+      writeMessage(data.from, data.msg);
+    });
 
   });
 
-  // Listen for the "user" event, which will be broadcast when something
-  // happens to a user we're subscribed to.  See the "autosubscribe" attribute
-  // of the User model to see which messages will be broadcast by default
-  // to subscribed sockets.
-  io.socket.on('user', function messageReceived(message) {
-
-    switch (message.verb) {
-
-      // Handle user creation
-      case 'created':
-        addUser(message.data);
-        break;
-
-      // Handle user destruction
-      case 'destroyed':
-        removeUser(message.id);
-        break;
-
-      default:
-        break;
-    }
-
-  });
-
-  io.socket.on('chat', function messageReceived(message) {
-
-    switch (message.verb) {
-      case 'messaged': receiveMessage(message.data); break;
-      default: break;
-    }
-  });
 });
