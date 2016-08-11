@@ -104,7 +104,6 @@ module.exports = {
   },
 
   chat: function (req, res) {
-    console.log("test: " + req.param('sender'));
     sails.io.sockets.emit("chat", {verb:"messaged", data:{from: req.param('sender'), msg: req.param('msg')}})
   }
 };
