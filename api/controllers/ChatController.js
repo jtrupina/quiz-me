@@ -26,8 +26,6 @@ module.exports = {
 
       User.find(req.session.me.id).exec(function (err, user) {
         if( ! ChatConnectionService.isOnline(user[0])) {
-          // Get the socket ID from the request
-          var socketId = sails.sockets.getId(req);
           ChatConnectionService.addConnection(user[0]);
 
           sails.sockets.broadcast('chat_users_online', 'user_joined_chat', user[0]);

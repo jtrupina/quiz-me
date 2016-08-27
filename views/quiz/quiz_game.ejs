@@ -1,5 +1,4 @@
 <div class="container">
-
   <!-- Static navbar -->
   <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -16,27 +15,19 @@
         <ul class="nav navbar-nav">
           <li class="active"><a href="/">Home</a></li>
           <li><a href="/chat">Chat</a></li>
-          <li><a href="/quizzes">Quiz</a></li>
+          <li><a href="/quiz">Quiz</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <% if (!req.session.me) { %>
-          <li><a href="/register">Register</a></li>
-          <li><a href="/login">Login</a></li>
+          <li><a href="/signup">Signup</a></li>
+          <li><a href="/signin">Login</a></li>
           <% } else { %>
-          <li><a href="/logout">(<%= req.session.me.email%>)Logout</a> </li>
+          <li><a href="/logout">Logout</a> </li>
           <% } %>
         </ul>
       </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->
   </nav>
 
-  <!-- Main component for a primary marketing message or call to action -->
-  <div class="jumbotron">
-    <h1>Quiz me!</h1>
-    <p>Welcome to Quiz me app! It is realtime multiplayer quiz game, battle your friends and win them in knowledge war!</p>
-    <p>
-      <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">Quiz someone! &raquo;</a>
-    </p>
-  </div>
 
-</div> <!-- /container -->
+  <% block('localScripts', '<script src="/js/quiz_game.js"></script>') %>

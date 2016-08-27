@@ -40,6 +40,12 @@ io.socket.on('connect', function socketConnected() {
       writeMessage(data.from, data.msg);
     });
 
+    io.socket.on('disconnect', function socketDisconnected() {
+      alert("test");
+    })
+
   });
+
+
 
 });

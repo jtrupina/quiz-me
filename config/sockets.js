@@ -135,6 +135,21 @@ module.exports.sockets = {
       }, 3000);
     }
 
+    if(typeof session.me !== 'undefined') {
+      var user = QuizPlayersService.getPlayer(session.me.id);
+      if(user && (user.socket == socket.id)) {
+        var room = QuizGamesService.getAvailableQuiz(user.inroom);
+        if(_.contains((room.people), user.id)) {
+          console.log("U SOBI JE");
+          room.people.splice(room.people.indexOf(user.id));
+          sails.sockets.leave(socket, room.id);
+        }
+        QuizPlayersService.removePlayer(user.id);
+        sails.sockets.broadcast(user.inroom, 'user_left', {user: user});
+      }
+    }
+
+
     // By default: do nothing.
     return cb();
   }

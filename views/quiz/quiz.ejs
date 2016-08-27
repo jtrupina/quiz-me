@@ -1,0 +1,152 @@
+<div class="container">
+  <!-- Static navbar -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Quiz me</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/chat">Chat</a></li>
+          <li><a href="/quiz">Quiz</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <% if (!req.session.me) { %>
+          <li><a href="/signup">Signup</a></li>
+          <li><a href="/signin">Login</a></li>
+          <% } else { %>
+          <li><a href="/logout">Logout</a> </li>
+          <% } %>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+  </nav>
+  <div id="main" class="row">
+    <div class="col-md-4">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Create quiz
+        </div>
+        <div style="padding-top:30px" class="panel-body" >
+
+          If you wish to create your own quiz room, go ahead and create it
+          <a href="#" class="btn btn-success" name="createRoom" data-toggle="modal" data-target="#roomModal">Create room</a>
+
+          <p>Note: If you hit refresh on page you will be removed from quiz game.</p>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          List of available quizzes
+        </div>
+        <ul id="available-quizzes" class="list-group">
+        </ul>
+    </div>
+  </div>
+</div>
+  <div id="quiz-game" class="row">
+    <div class="col-md-3">
+      <div class="panel panel-warning">
+        <div class="panel-heading">
+          Players
+        </div>
+        <div style="padding-top:30px" class="panel-body" >
+          <ul id="players" class="list-group">
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Quiz game
+        </div>
+        <div style="padding-top:30px" class="panel-body" >
+          <div id="quiz">
+            <h4 id="question"></h4>
+            <table id="questions" class="table table-bordered table-hover">
+              <tbody>
+              </tbody>
+            </table>
+            <p id="question-winner"></p>
+            <p id="quiz-status"><small id="quiz-message"></small><span id="countdown" class=""></span></p>
+          </div>
+          <div id="winner">
+            <h3 id="winner-message"></h3>
+
+          </div>
+          <div id="start" style="text-align: center;"></div>
+          <span id="name"></span>
+          <span id="owner"></span>
+          <span id="category"></span>
+          <h4>Rules:</h4>
+          <ul>
+            <li>There is 5 seconds delay before quiz game starts</li>
+            <li>Quiz consists of 5 questions in chosen category</li>
+            <li>Leaving browser (or browser tab) or even refreshing page will get you removed from quiz</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          Score
+        </div>
+        <div class="panel-body">
+          <table id="status-table" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>Player</th>
+              <th>Points</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal start -->
+  <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="createRoomLabel">Create quiz</h4>
+        </div>
+        <div class="modal-body">
+          You can create a quiz room here. Names have to be unique. Chose your favourite category!
+          <form class="form-inline" id="createRoomForm">
+            <input type="text" class="form-control input-lg"  placeholder="Quiz room name" id="createRoomName">
+            <select id="quiz-category" name="category" class="form-control input-lg">
+              <option value="javascript">Javascript</option>
+              <option value="cars">Cars</option>
+              <option value="history">History</option>
+            </select>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">Close</button>
+          <button data-dismiss="modal" id="createRoomBtn" class="btn btn-success btn-lg">Create room</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal end -->
+
+
+<% block('localScripts', '<script src="/js/quiz.js"></script><script src="/js/quiz_game.js"></script>') %>

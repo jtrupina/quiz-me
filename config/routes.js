@@ -48,7 +48,11 @@ module.exports.routes = {
   '/logout': 'AuthController.logout',
 
   // CHAT
-  'get /chat': 'ChatController.render'
+  'get /chat': 'ChatController.render',
+
+  // QUIZ
+  'get /quizzes': 'QuizController.render',
+  'get /quiz/game/:id/:name': 'QuizController.activateQuiz'
 
   /***************************************************************************
   *                                                                          *
