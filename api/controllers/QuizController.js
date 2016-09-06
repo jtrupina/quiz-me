@@ -38,17 +38,6 @@ module.exports = {
     var user = req.session.me;
     QuizPlayersService.addPlayer({id: user.id, name: user.name, owns: id, inroom: id, socket: sails.sockets.getId(req)});
 
-    /*
-    Quiz.create({
-      name: req.param('name'),
-      category: req.param('category'),
-      owner: req.session.me.id
-    }).exec(function (err, newQuiz) {
-      Quiz.publishCreate(newQuiz, req);
-      QuizGamesService.addQuizGame(newQuiz);
-      return res.redirect('quiz/game/' + newQuiz.id + '/' + newQuiz.name);
-    })
-    */
   },
 
   subscribe: function (req, res) {
@@ -56,11 +45,6 @@ module.exports = {
     rooms = QuizGamesService.getAvailableQuizzes();
     sizeRooms = _.size(rooms);
     return res.json({rooms: rooms, count: sizeRooms});
-    /*
-    console.log("USER SUBSCRIBED TO LIST OF QUIZZES: " + req.session.me.email);
-    Quiz.watch(req);
-    return res.json(QuizGamesService.getAvailableQuizzes());
-    */
   },
 
   activateQuiz: function (req, res) {
